@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>杨过游戏中心</title>
+  <meta name="description" content="杨过游戏中心（静态站点）：下拉搜索 + 精选展示 + 置底支付二维码。" />
+  <link rel="stylesheet" href=".//assets/style.css" />
+</head>
+<body>
+  <header>
+    <h1>杨过游戏中心</h1>
+
+    <div class="sub">
+      <div class="panel" role="search">
+        <div class="form">
+          <div>
+            <label for="gameSelect">下拉选择游戏（来自全量库）</label>
+            <select id="gameSelect" aria-label="选择游戏">
+              <option value="" selected>加载中...</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="keyword">关键字筛选（只影响下拉框）</label>
+            <input id="keyword" type="text" placeholder="例如：学院 / Summer / 物语 ..." autocomplete="off" />
+          </div>
+        </div>
+
+        <div class="hint">
+          共 <b id="totalCount">0</b> 个条目；中间区域展示 <b>FEATURED_GAMES</b>（默认 10 个，可在 <code class="kbd">assets/app.js</code> 里改）。
+          <br/>
+          小技巧：选中游戏后会把“QQ群 + 游戏名”复制到剪贴板。
+        </div>
+
+        <div class="actions" style="margin-top:12px;">
+          <button class="btn secondary" id="resetBtn" type="button">重置筛选</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="section" aria-label="精选游戏">
+    <h2>精选展示（点击卡片复制联系方式）</h2>
+    <div class="grid" id="gameList" aria-live="polite"></div>
+  </main>
+
+  <footer>
+    <div>联系我们：QQ群 1061234049</div>
+    <div style="margin-top:6px;">图片放到根目录：<code class="kbd">/weixin-qr.png</code> / <code class="kbd">/alipay-qr.png</code></div>
+  </footer>
+
+  <!-- 固定底部支付条 -->
+  <div class="paybar" role="contentinfo" aria-label="支付方式">
+    <div class="paybar-inner">
+      <div class="paybar-left">
+        <div class="t1">支持赞助 / 赞助后联系群：1061234049</div>
+        <div class="t2">提示：在 GitHub Pages 上部署时，二维码图片与本文件同目录即可。</div>
+      </div>
+
+      <div class="paybar-qrs">
+        <div class="qr">
+          <img src=".//weixin-qr.png" alt="微信支付二维码" loading="lazy" />
+          <div class="lbl">微信</div>
+        </div>
+        <div class="qr">
+          <img src=".//alipay-qr.png" alt="支付宝支付二维码" loading="lazy" />
+          <div class="lbl">支付宝</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" id="copyBtn" type="button">复制QQ群</button>
+        <button class="btn secondary" id="toTopBtn" type="button">回到顶部</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" aria-live="polite"></div>
+
+  <script src="./assets/app.js" defer></script>
+</body>
+</html>
