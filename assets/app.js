@@ -14,7 +14,7 @@ const FEATURED_GAMES = [
 ];
 
 // ====== 可自定义：点击卡片时复制的“联系信息/口令/下载提示” ======
-const CLICK_COPY_TEXT = "联系QQ群：1061234049（复制这条信息发给客服更快）";
+const CLICK_COPY_TEXT = "1061234049";
 
 // ====== 工具函数 ======
 const $ = (sel) => document.querySelector(sel);
