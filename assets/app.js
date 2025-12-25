@@ -14,7 +14,7 @@ const FEATURED_GAMES = [
 ];
 
 // ====== 可自定义：点击卡片时复制的“联系信息/口令/下载提示” ======
-const CLICK_COPY_TEXT = "586507429";
+const CLICK_COPY_TEXT = "1026314286";
 
 // ====== 工具函数 ======
 const $ = (sel) => document.querySelector(sel);
@@ -76,7 +76,7 @@ function renderFeatured(){
     `;
     const onClick = async () => {
       const ok = await copyToClipboard(CLICK_COPY_TEXT);
-      showToast(ok ? "已复制到剪贴板 ✅" : "复制失败：请手动复制QQ群586507429");
+      showToast(ok ? "已复制到剪贴板 ✅" : "复制失败：请手动复制QQ群1026314286");
     };
     card.addEventListener("click", onClick);
     card.addEventListener("keydown", (e) => {
@@ -142,12 +142,12 @@ function wireEvents(){
     const name = $("#gameSelect").value;
     if(!name) return;
     const ok = await copyToClipboard(`${CLICK_COPY_TEXT}\n你选择的游戏：${name}`);
-    showToast(ok ? "已复制（含游戏名）✅" : "复制失败：请手动复制QQ群586507429");
+    showToast(ok ? "已复制（含游戏名）✅" : "复制失败：请手动复制QQ群1026314286");
   });
 
   $("#copyBtn").addEventListener("click", async () => {
     const ok = await copyToClipboard(CLICK_COPY_TEXT);
-    showToast(ok ? "已复制联系方式 ✅" : "复制失败：QQ群 1061234049");
+    showToast(ok ? "已复制联系方式 ✅" : "复制失败：QQ群 1026314286");
   });
 
   $("#toTopBtn").addEventListener("click", () => {
