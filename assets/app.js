@@ -72,7 +72,7 @@ function renderFeatured(){
     card.innerHTML = `
       <img class="game-thumb" src="${imgSrc}" alt="${escapeHtml(name)}" loading="lazy" onerror="this.style.display='none'" />
       <h3>${escapeHtml(name)}</h3>
-      <p>${exists ? "已收录（点击复制联系方式）" : "已收录（点击复制联系方式）"}</p>
+      <p>${exists ? "安卓IOS电脑三端（点击复制联系方式）" : "安卓IOS电脑三端（点击复制联系方式）"}</p>
     `;
     const onClick = async () => {
       const ok = await copyToClipboard(CLICK_COPY_TEXT);
