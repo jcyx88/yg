@@ -1,20 +1,19 @@
 // ====== 可自定义：中间区域展示的“精选游戏” ======
-// 微信/支付宝均可付款，保存到手机扫码支付
 const FEATURED_GAMES = [
-  "亚洲之子：东方之乡",
-  "极品采花郎",
-  "特工17v26赞助版",
-  "美德v17",
-  "凤凰v16",
-  "永恒世界0.95",
-  "麻豆：爱的初体验",
-  "隔壁的美艳人妻",
-  "我的幸福人生ver1.7",
-  "日不落帝国"
+  "空洞骑士：丝之歌",
+  "小小梦魇3",
+  "天外世界2",
+  "忍者龙剑传4",
+  "嗜血印",
+  "斗罗大陆",
+  "反转21克",
+  "隐形守护者",
+  "飞跃13号房",
+  "神都不良探"
 ];
 
-// ====== 可自定义：点击卡片时复制的“联系信息/口令/下载提示” ======
-const CLICK_COPY_TEXT = "1080034594";
+// ====== 可自定义：点击卡片时复制的“联系信息” ======
+const CLICK_COPY_TEXT = "联系管理员：1080034594";
 
 // ====== 工具函数 ======
 const $ = (sel) => document.querySelector(sel);
@@ -72,11 +71,11 @@ function renderFeatured(){
     card.innerHTML = `
       <img class="game-thumb" src="${imgSrc}" alt="${escapeHtml(name)}" loading="lazy" onerror="this.style.display='none'" />
       <h3>${escapeHtml(name)}</h3>
-      <p>${exists ? "安卓IOS电脑三端（点击复制联系方式）" : "安卓IOS电脑三端（点击复制联系方式）"}</p>
+      <p>${exists ? "点击复制联系方式" : "点击复制联系方式"}</p>
     `;
     const onClick = async () => {
       const ok = await copyToClipboard(CLICK_COPY_TEXT);
-      showToast(ok ? "已复制到剪贴板 ✅" : "复制失败：请手动复制QQ群1080034594");
+      showToast(ok ? "已复制到剪贴板" : "复制失败：请手动复制 1080034594");
     };
     card.addEventListener("click", onClick);
     card.addEventListener("keydown", (e) => {
@@ -142,12 +141,12 @@ function wireEvents(){
     const name = $("#gameSelect").value;
     if(!name) return;
     const ok = await copyToClipboard(`${CLICK_COPY_TEXT}\n你选择的游戏：${name}`);
-    showToast(ok ? "已复制（含游戏名）✅" : "复制失败：请手动复制QQ群1080034594");
+    showToast(ok ? "已复制（含游戏名）" : "复制失败：请手动复制 1080034594");
   });
 
   $("#copyBtn").addEventListener("click", async () => {
     const ok = await copyToClipboard(CLICK_COPY_TEXT);
-    showToast(ok ? "已复制联系方式 ✅" : "复制失败：QQ群 1080034594");
+    showToast(ok ? "已复制联系方式" : "复制失败：请手动复制 1080034594");
   });
 
   $("#toTopBtn").addEventListener("click", () => {

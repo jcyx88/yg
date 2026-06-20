@@ -3,36 +3,35 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content" />
-  <title>杨过游戏中心</title>
-  <meta name="description" content="杨过游戏中心（静态站点）：下拉搜索 + 精选展示 + 置底支付二维码。" />
+  <title>杨过游戏目录</title>
+  <meta name="description" content="杨过游戏目录：游戏名称检索、精选展示和联系方式。" />
   <link rel="canonical" href="https://99u.xyz/" />
   <link rel="stylesheet" href="./assets/style.css" />
 </head>
 <body>
   <header>
-    <h1>杨过游戏中心</h1>
+    <h1>杨过游戏目录</h1>
 
     <div class="sub">
       <div class="panel" role="search">
         <div class="form">
           <div>
-            <label for="gameSelect">下拉选择游戏（安卓IOS电脑三端可玩）</label>
+            <label for="gameSelect">下拉选择游戏</label>
             <select id="gameSelect" aria-label="选择游戏">
               <option value="" selected>加载中...</option>
             </select>
           </div>
 
           <div>
-            <label for="keyword">付款后联系Q群1080034594取货</label>
+            <label for="keyword">搜索游戏名称</label>
             <input id="keyword" type="text" placeholder="例如：学院 / Summer / 物语 ..." autocomplete="off" />
           </div>
         </div>
 
         <div class="hint">
-          共 <b id="totalCount">0</b> 个条目；如微信付款失败，请使用支付宝支付 <b>FEATURED_GAMES</b>（超多等你来，可在 <code class="kbd">assets/app.js</code> 里改）。
+          共 <b id="totalCount">0</b> 个条目；精选展示可在 <code class="kbd">assets/app.js</code> 里调整。
           <br/>
-          小技巧：购买后，进Q群1080034594，联系管理员拿资源。
+          如需了解更多信息，请联系管理员。
         </div>
 
         <div class="actions" style="margin-top:12px;">
@@ -43,36 +42,36 @@
   </header>
 
   <main class="section" aria-label="精选游戏">
-    <h2>精选展示安卓/IOS/电脑三端（点击卡片复制联系方式）</h2>
+    <h2>精选展示（点击卡片复制联系方式）</h2>
     <div class="grid" id="gameList" aria-live="polite"></div>
   </main>
 
   <footer>
-    <div>购买后联系：QQ群1080034594</div>
-    <div style="margin-top:6px;">图片放到根目录：<code class="kbd">/weixin-qr.png</code> / <code class="kbd">/alipay-qr.png</code></div>
+    <div>联系管理员：1080034594</div>
+    <div style="margin-top:6px;">二维码图片：<code class="kbd">/weixin-qr.png</code> / <code class="kbd">/alipay-qr.png</code></div>
   </footer>
 
-  <!-- 固定底部支付条 -->
-  <div class="paybar" role="contentinfo" aria-label="支付方式">
+  <!-- 固定底部联系栏 -->
+  <div class="paybar" role="contentinfo" aria-label="联系方式">
     <div class="paybar-inner">
       <div class="paybar-left">
-        <div class="t1">支持微信（如遇微信支付失败，请使用支付宝）/支付宝/花呗，付款后联系群：1080034594</div>
-        <div class="t2">提示：39元包含几万款游戏，无二次消费。</div>
+        <div class="t1">联系管理员：1080034594</div>
+        <div class="t2">如需了解目录内容和更新信息，请通过二维码或联系方式咨询。</div>
       </div>
 
       <div class="paybar-qrs">
         <div class="qr">
-          <img src="./weixin-qr.png" alt="微信支付二维码" loading="lazy" />
-          <div class="lbl">微信+支付宝</div>
+          <img src="./weixin-qr.png" alt="联系方式二维码" loading="lazy" />
+          <div class="lbl">联系二维码</div>
         </div>
         <div class="qr">
-          <img src="./alipay-qr.png" alt="支付宝支付二维码" loading="lazy" />
-          <div class="lbl">微信备用</div>
+          <img src="./alipay-qr.png" alt="备用联系方式二维码" loading="lazy" />
+          <div class="lbl">备用二维码</div>
         </div>
       </div>
 
       <div class="actions">
-        <button class="btn" id="copyBtn" type="button">复制QQ群</button>
+        <button class="btn" id="copyBtn" type="button">复制联系方式</button>
         <button class="btn secondary" id="toTopBtn" type="button">回到顶部</button>
       </div>
     </div>

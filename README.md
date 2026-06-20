@@ -1,11 +1,11 @@
-# 杨过游戏中心（GitHub Pages 部署版）
+# 杨过游戏目录（GitHub Pages 部署版）
 
 ## 目录结构
 - `index.html`：主页
 - `assets/style.css`：样式
 - `assets/app.js`：交互逻辑（可改“精选10个游戏”）
-- `data/games.json`：全量游戏库（由原 HTML 的 `GAMES` 数组拆出来）
-- `weixin-qr.png` / `alipay-qr.png`：你的二维码图片（放在仓库根目录）
+- `data/games.json`：游戏目录
+- `weixin-qr.png` / `alipay-qr.png`：联系二维码图片（放在仓库根目录）
 
 ## 部署到 GitHub Pages（项目站点）
 1. 新建仓库（或用现有仓库），把以上文件按目录上传到仓库根目录。
@@ -38,7 +38,13 @@
 3. 等 GitHub 签发 TLS 证书后，勾选 **Enforce HTTPS**。
 4. 再访问 `https://99u.xyz/`，应不再出现证书/不安全提示；访问 `http://99u.xyz/` 应自动跳转到 `https://99u.xyz/`。
 
-页面里已经加入 `upgrade-insecure-requests` 和 `block-all-mixed-content`，用于在 HTTPS 生效后阻止混合内容问题。但证书错误发生在页面加载前，必须通过 GitHub Pages 设置里的 **Enforce HTTPS** 才能彻底解决。
+不要在 GitHub Pages 的 HTTPS 证书生效前强制升级页面子资源。如果站点仍通过 `http://99u.xyz/` 打开，过早升级会导致 CSS、JavaScript、JSON 和图片全部加载失败。
+
+## 关于 QQ/微信内置浏览器的安全提示
+
+如果 QQ 或微信浏览器跳转到 `security.res.qq.com` 并提示“网站可能含有有害信息”，这是腾讯安全中心的域名风控，不是网页内的 JavaScript 弹窗。站点内容清理并重新发布后，可能还需要到腾讯安全中心提交申诉/复查，等待安全库刷新。
+
+建议公开页面保持合规内容，避免展示不适合公开传播或容易被安全系统误判的敏感信息。
 
 ## 你需要改的地方
 - 精选展示的 10 个游戏：在 `assets/app.js` 里改 `FEATURED_GAMES` 数组即可。
