@@ -3,9 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content" />
   <title>杨过游戏中心</title>
   <meta name="description" content="杨过游戏中心（静态站点）：下拉搜索 + 精选展示 + 置底支付二维码。" />
-  <link rel="stylesheet" href=".//assets/style.css" />
+  <link rel="canonical" href="https://99u.xyz/" />
+  <link rel="stylesheet" href="./assets/style.css" />
 </head>
 <body>
   <header>
@@ -22,7 +24,7 @@
           </div>
 
           <div>
-            <label for="keyword">付款后联系Q群1080034594取货>fu'kuan
+            <label for="keyword">付款后联系Q群1080034594取货</label>
             <input id="keyword" type="text" placeholder="例如：学院 / Summer / 物语 ..." autocomplete="off" />
           </div>
         </div>
@@ -60,11 +62,11 @@
 
       <div class="paybar-qrs">
         <div class="qr">
-          <img src=".//weixin-qr.png" alt="微信支付二维码" loading="lazy" />
+          <img src="./weixin-qr.png" alt="微信支付二维码" loading="lazy" />
           <div class="lbl">微信+支付宝</div>
         </div>
         <div class="qr">
-          <img src=".//alipay-qr.png" alt="支付宝支付二维码" loading="lazy" />
+          <img src="./alipay-qr.png" alt="支付宝支付二维码" loading="lazy" />
           <div class="lbl">微信备用</div>
         </div>
       </div>
