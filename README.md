@@ -4,8 +4,8 @@
 - `index.html`：主页
 - `assets/style.css`：样式
 - `assets/app.js`：交互逻辑（可改“精选10个游戏”）
-- `assets/images/complete-package-payment.png`：完整包主支付图，支持微信和支付宝，建议优先使用支付宝
-- `assets/images/complete-package-backup-qr.png`：微信备用支付图，微信付款失败后使用
+- `assets/images/complete-package-payment.png`：完整包主图，支持微信和支付宝，建议优先使用支付宝
+- `assets/images/complete-package-backup-qr.png`：微信备用图，微信方式不稳定时使用
 - `assets/images/experience-package.jpg`：基础体验包商品说明图
 - `assets/images/experience-package-qr.jpg`：基础体验包购买位置二维码
 - `data/games.json`：游戏目录
@@ -34,7 +34,7 @@ http://localhost:3000
 - 完整包购买后加入 QQ 群：`1080034594`
 - 基础体验包：18 元，包含 30 款经典游戏体验内容，一次性提取，不包含售后
 - 基础体验包购买后加入 QQ 群：`769014453`
-- 主支付码支持微信和支付宝，建议优先使用支付宝；微信付款失败后扫微信备用支付图。
+- 主图支持微信和支付宝，建议优先使用支付宝；如微信方式不稳定，请使用备用图。
 
 ## 部署到 GitHub Pages（项目站点）
 1. 新建仓库（或用现有仓库），把以上文件按目录上传到仓库根目录。
@@ -71,6 +71,6 @@ http://localhost:3000
 
 ## 你需要改的地方
 - 精选展示的 10 个游戏：在 `assets/app.js` 里改 `FEATURED_GAMES` 数组即可。
-- 完整包 QQ 群、基础体验包 QQ 群、价格和付款提示：在 `assets/app.js` 里改 `CONTACT_TEXT`、`COMPLETE_GROUP`、`EXPERIENCE_GROUP`、`PACKAGE_PRICE`、`BACKUP_PAYMENT_TEXT`。
+- 完整包 QQ 群、基础体验包 QQ 群、价格和操作提示：在 `assets/app.js` 里改 `CONTACT_TEXT`、`COMPLETE_GROUP`、`EXPERIENCE_GROUP`、`PACKAGE_PRICE`、`BACKUP_PAYMENT_TEXT`。
 - 后端咨询回复规则：在 `server.js` 里改 `consultReply()`。
 

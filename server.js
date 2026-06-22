@@ -96,11 +96,11 @@ function consultReply(message, selectedGame){
   const isExperienceInquiry = text.includes("基础") || text.includes("体验包") || text.includes("18") || text.includes(EXPERIENCE_GROUP);
 
   if(isExperienceInquiry){
-    return `${EXPERIENCE_PACKAGE_SUMMARY}付款后请加入 QQ 群 ${EXPERIENCE_GROUP} 领取。`;
+    return `${EXPERIENCE_PACKAGE_SUMMARY}完成后请加入 QQ 群 ${EXPERIENCE_GROUP} 领取。`;
   }
 
   if(text.includes("微信") || text.includes("失败") || text.includes("付款") || text.includes("支付") || text.includes("支付宝") || text.includes("银行卡") || text.includes("备用")){
-    return `完整包主支付码支持微信和支付宝，建议优先使用支付宝；如果微信付款失败，请扫页面中的“微信备用支付图”。付款后请加入 QQ 群 ${COMPLETE_GROUP} 领取。`;
+    return `完整包主图支持微信和支付宝，建议优先使用支付宝；如微信方式不稳定，请使用页面中的备用图。完成后请加入 QQ 群 ${COMPLETE_GROUP} 领取。`;
   }
 
   if(text.includes("群") || text.includes("领取") || text.includes("qq")){
@@ -108,7 +108,7 @@ function consultReply(message, selectedGame){
   }
 
   if(text.includes("购买") || text.includes("位置") || text.includes("扫码") || text.includes("哪里")){
-    return `请在页面标注“付款后进QQ群${COMPLETE_GROUP}”的区域扫码付款，价格为 39 元。建议优先使用支付宝；微信失败后扫备用支付图。`;
+    return `请在页面标注“完整包QQ群${COMPLETE_GROUP}”的区域查看完整包信息，价格为 39 元。建议优先使用支付宝；如微信方式不稳定，请使用备用图。`;
   }
 
   if(text.includes("内容") || text.includes("包含") || text.includes("资料")){
@@ -123,7 +123,7 @@ function consultReply(message, selectedGame){
     return `${gameLine}可以继续询问该游戏的版本、资料内容、更新情况和领取方式。`;
   }
 
-  return `可以咨询完整包内容、完整包QQ群${COMPLETE_GROUP}、基础体验包QQ群${EXPERIENCE_GROUP}、微信失败后的备用支付图，以及具体游戏资料版本和更新情况。`;
+  return `可以咨询完整包内容、完整包QQ群${COMPLETE_GROUP}、基础体验包QQ群${EXPERIENCE_GROUP}、备用图，以及具体游戏资料版本和更新情况。`;
 }
 
 async function handleConsult(req, res){
@@ -153,7 +153,7 @@ async function handleConsult(req, res){
         secondaryPackage:`基础体验包 18 元，包含 30 款经典游戏体验内容，一次性提取，不包含售后，QQ群 ${EXPERIENCE_GROUP}`,
         completePackage:COMPLETE_PACKAGE_SUMMARY,
         experiencePackage:EXPERIENCE_PACKAGE_SUMMARY,
-        paymentAdvice:"主支付码支持微信和支付宝，建议优先使用支付宝；微信失败后扫微信备用支付图。"
+        paymentAdvice:"主图支持微信和支付宝，建议优先使用支付宝；如微信方式不稳定，请使用备用图。"
       }
     });
   }catch(error){

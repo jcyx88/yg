@@ -1,12 +1,12 @@
 const FEATURED_GAMES = [
   "亚洲之子：东方之乡",
-  "极品采花郎",
+  "极品冒险郎",
   "特工17v25.9",
   "美德v17",
   "凤凰v15.2",
   "永恒世界0.95",
-  "麻豆：爱的初体验",
-  "隔壁的美艳人妻",
+  "模特：爱的初篇",
+  "隔壁的精美伴侣",
   "我的幸福人生ver1.7",
   "日不落帝国"
 ];
@@ -16,9 +16,21 @@ const COMPLETE_GROUP = "1080034594";
 const EXPERIENCE_GROUP = "769014453";
 const PACKAGE_NAME = "完整包";
 const PACKAGE_PRICE = "¥39.00";
-const BACKUP_PAYMENT_TEXT = "主支付码支持微信和支付宝，建议优先使用支付宝；微信付款失败后请扫微信备用支付图。";
+const BACKUP_PAYMENT_TEXT = "主图支持微信和支付宝，建议优先使用支付宝；如微信方式不稳定，请使用备用图。";
 const COMPLETE_PACKAGE_SUMMARY = "39 元完整包包含 6000+ 款游戏、资料整理、持续更新、快速检索、人工服务和 1 年售后。";
 const EXPERIENCE_PACKAGE_SUMMARY = `基础体验包 18 元包含 30 款经典游戏体验内容，一次性提取，不包含售后，QQ群 ${EXPERIENCE_GROUP}。`;
+const FALLBACK_GAMES = [
+  "亚洲之子：东方之乡",
+  "极品冒险郎",
+  "特工17v25.9",
+  "美德v17",
+  "凤凰v15.2",
+  "永恒世界0.95",
+  "模特：爱的初篇",
+  "隔壁的精美伴侣",
+  "我的幸福人生ver1.7",
+  "日不落帝国"
+];
 
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => Array.from(document.querySelectorAll(sel));
@@ -142,11 +154,11 @@ function fallbackConsultReply(message){
   const isExperienceInquiry = text.includes("基础") || text.includes("体验包") || text.includes("18") || text.includes(EXPERIENCE_GROUP);
 
   if(isExperienceInquiry){
-    return `${EXPERIENCE_PACKAGE_SUMMARY}付款后请加入 QQ 群 ${EXPERIENCE_GROUP} 领取。`;
+    return `${EXPERIENCE_PACKAGE_SUMMARY}完成后请加入 QQ 群 ${EXPERIENCE_GROUP} 领取。`;
   }
 
-  if(text.includes("微信") || text.includes("失败") || text.includes("付款") || text.includes("支付") || text.includes("支付宝") || text.includes("银行卡") || text.includes("备用")){
-    return `完整包主支付码支持微信和支付宝，建议优先使用支付宝；如果微信付款失败，请扫页面中的“微信备用支付图”。付款后请加入 QQ 群 ${COMPLETE_GROUP} 领取。`;
+  if(text.includes("微信") || text.includes("失败") || text.includes("付款") || text.includes("支付") || text.includes("支付宝") || text.includes("备用")){
+    return `完整包主图支持微信和支付宝，建议优先使用支付宝；如微信方式不稳定，请使用页面中的备用图。完成后请加入 QQ 群 ${COMPLETE_GROUP} 领取。`;
   }
 
   if(text.includes("群") || text.includes("领取") || text.includes("qq")){
@@ -154,7 +166,7 @@ function fallbackConsultReply(message){
   }
 
   if(text.includes("购买") || text.includes("位置") || text.includes("扫码") || text.includes("哪里")){
-    return `请在页面标注“付款后进QQ群${COMPLETE_GROUP}”的区域扫码付款，价格为 ${PACKAGE_PRICE}。建议优先使用支付宝；微信失败后扫备用支付图。付款后请加入 QQ 群 ${COMPLETE_GROUP}。`;
+    return `请在页面标注“完整包QQ群${COMPLETE_GROUP}”的区域查看完整包信息，价格为 ${PACKAGE_PRICE}。建议优先使用支付宝；如微信方式不稳定，请使用备用图。完成后请加入 QQ 群 ${COMPLETE_GROUP}。`;
   }
 
   if(text.includes("内容") || text.includes("包含") || text.includes("资料")){
@@ -166,7 +178,7 @@ function fallbackConsultReply(message){
   }
 
   const game = selectedGameName();
-  return `可以咨询完整包内容、完整包QQ群${COMPLETE_GROUP}、基础体验包QQ群${EXPERIENCE_GROUP}、微信失败后的备用支付图，以及具体游戏的资料版本和更新情况。${game ? `你当前选择的是「${game}」，可以直接询问它的版本和领取方式。` : "也可以先在下拉框选择一个游戏再咨询。"}`;
+  return `可以咨询完整包内容、完整包QQ群${COMPLETE_GROUP}、基础体验包QQ群${EXPERIENCE_GROUP}、备用图，以及具体游戏的资料版本和更新情况。${game ? `你当前选择的是「${game}」，可以直接询问它的版本和领取方式。` : "也可以先在下拉框选择一个游戏再咨询。"}`;
 }
 
 function renderMessage(role, text){
@@ -230,7 +242,7 @@ function openChat(prefill = ""){
   document.body.classList.add("chat-open");
 
   if(!$("#chatMessages").children.length){
-    renderMessage("assistant", `你好，我可以帮你了解${PACKAGE_NAME}内容、${PACKAGE_PRICE}付款方式、完整包QQ群${COMPLETE_GROUP}、基础体验包QQ群${EXPERIENCE_GROUP}。${COMPLETE_PACKAGE_SUMMARY}${EXPERIENCE_PACKAGE_SUMMARY}建议优先使用支付宝；微信付款失败后，请扫微信备用支付图。`);
+    renderMessage("assistant", `你好，我可以帮你了解${PACKAGE_NAME}内容、${PACKAGE_PRICE}领取方式、完整包QQ群${COMPLETE_GROUP}、基础体验包QQ群${EXPERIENCE_GROUP}。${COMPLETE_PACKAGE_SUMMARY}${EXPERIENCE_PACKAGE_SUMMARY}建议优先使用支付宝；如微信方式不稳定，请使用备用图。`);
   }
 
   if(prefill){
@@ -323,8 +335,13 @@ async function boot(){
     wireEvents();
   }catch(error){
     console.error(error);
-    $("#totalCount").textContent = "加载失败";
-    showToast("games.json 加载失败，请确认 data/games.json 已上传到仓库");
+    ALL_GAMES = FALLBACK_GAMES;
+    ALL_GAMES_SET = new Set(ALL_GAMES);
+    $("#totalCount").textContent = "基础目录";
+    populateSelect(ALL_GAMES);
+    renderFeatured();
+    wireEvents();
+    showToast("目录暂时没有完全加载，已显示基础内容");
   }
 }
 
