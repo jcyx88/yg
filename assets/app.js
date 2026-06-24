@@ -1,13 +1,13 @@
 const FEATURED_GAMES = [
   "亚洲之子：东方之乡",
   "极品冒险郎",
-  "特工17v25.9",
-  "美德v17",
-  "凤凰v15.2",
-  "永恒世界0.95",
+  "特工17v26.9",
+  "美德1.1",
+  "凤凰v16",
+  "永恒世界v1.1",
   "模特：爱的初篇",
   "隔壁的精美伴侣",
-  "我的幸福人生ver1.7",
+  "我的幸福人生ver1.8",
   "日不落帝国"
 ];
 
@@ -16,24 +16,59 @@ const COMPLETE_GROUP = "1080034594";
 const EXPERIENCE_GROUP = "769014453";
 const PACKAGE_NAME = "完整包";
 const PACKAGE_PRICE = "¥39.00";
-const BACKUP_PAYMENT_TEXT = "主图支持微信和支付宝，建议优先使用支付宝；如微信方式不稳定，请使用备用图。";
-const COMPLETE_PACKAGE_SUMMARY = "39 元完整包包含 6000+ 款游戏、资料整理、持续更新、快速检索、人工服务和 1 年售后。";
+const BACKUP_PAYMENT_TEXT = "请截图保存到相册扫码付款，第一张图支持微信和支付宝，建议优先使用支付宝/微信中的银行卡；如第一张图微信方付款失败，请使用第二张微信备用支付图。完成后请申请 QQ 群 1080034594 领取。";
+const COMPLETE_PACKAGE_SUMMARY = "39 元完整包包含 20000多款游戏、资料整理、持续更新、快速检索、人工服务和 1 年售后。";
 const EXPERIENCE_PACKAGE_SUMMARY = `基础体验包 18 元包含 30 款经典游戏体验内容，一次性提取，不包含售后，QQ群 ${EXPERIENCE_GROUP}。`;
+const PAYMENT_CARDS = {
+  complete:[
+    {
+      title:"微信+支付宝图",
+      note:"请截图保存到相册扫码付款。第一张图支持微信和支付宝，建议优先使用支付宝/微信中的银行卡；完成后请申请 QQ 群 1080034594 领取。",
+      src:"./assets/images/complete-package-payment.jpg",
+      alt:"完整包微信加支付宝付款二维码，推荐使用支付宝"
+    },
+    {
+      title:"微信备用支付图",
+      note:"如第一张图微信方付款失败，请使用第二张微信备用支付图。",
+      src:"./assets/images/complete-package-backup-qr.jpg",
+      alt:"微信备用支付二维码"
+    }
+  ],
+  backup:[
+    {
+      title:"微信备用支付图",
+      note:"如第一张图微信方付款失败，请使用第二张微信备用支付图。",
+      src:"./assets/images/complete-package-backup-qr.jpg",
+      alt:"微信备用支付二维码"
+    }
+  ],
+  experience:[
+    {
+      title:"18 元体验包",
+      note:`基础体验包 18 元，付款后申请 QQ 群 ${EXPERIENCE_GROUP}。`,
+      src:"./assets/images/experience-package-qr.png",
+      alt:"18 元基础体验包付款二维码"
+    }
+  ]
+};
 const FALLBACK_GAMES = [
   "亚洲之子：东方之乡",
   "极品冒险郎",
-  "特工17v25.9",
-  "美德v17",
-  "凤凰v15.2",
-  "永恒世界0.95",
+  "特工17v26.9",
+  "美德1.1",
+  "凤凰v16",
+  "永恒世界v1.1",
   "模特：爱的初篇",
   "隔壁的精美伴侣",
-  "我的幸福人生ver1.7",
+  "我的幸福人生ver1.8",
   "日不落帝国"
 ];
 
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+const USE_CONSULT_BACKEND = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+const IMAGE_PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 10'%3E%3Crect width='16' height='10' fill='%23e5edf5'/%3E%3C/svg%3E";
+const IMAGE_VERSION = "mobile-data-20260623";
 
 let ALL_GAMES = [];
 let ALL_GAMES_SET = new Set();
@@ -93,11 +128,19 @@ function renderFeatured(){
 
   FEATURED_GAMES.forEach((name, idx) => {
     const exists = ALL_GAMES_SET.has(name);
-    const imgSrc = `assets/images/games/game${idx + 1}.jpg`;
+    const imgSrc = `assets/images/games/thumbs/game${idx + 1}.jpg?v=${IMAGE_VERSION}`;
     const card = document.createElement("article");
     card.className = "card";
     card.innerHTML = `
-      <img class="game-thumb" src="${imgSrc}" alt="${escapeHtml(name)}游戏封面图" loading="lazy" onerror="this.style.display='none'" />
+      <div class="game-thumb-wrap mask-profile-${idx + 1}">
+        <img class="game-thumb" src="${IMAGE_PLACEHOLDER}" data-src="${imgSrc}" alt="${escapeHtml(name)}游戏封面图，胸部位置已薄码" decoding="async" onerror="this.closest('.game-thumb-wrap').style.display='none'" />
+        ${idx === 0 ? `
+          <span class="thumb-mask-part part-left" aria-hidden="true"></span>
+          <span class="thumb-mask-part part-center" aria-hidden="true"></span>
+          <span class="thumb-mask-part part-right" aria-hidden="true"></span>
+        ` : ""}
+        <span class="thumb-mask-label" aria-hidden="true">胸部位置已薄码</span>
+      </div>
       <div class="card-body">
         <span class="game-tag">${exists ? "目录内" : "可咨询"}</span>
         <h3>${escapeHtml(name)}</h3>
@@ -111,6 +154,8 @@ function renderFeatured(){
     list.appendChild(card);
   });
 
+  setupDeferredImages();
+
   $$("[data-copy-game]").forEach((button) => {
     button.addEventListener("click", async () => {
       const name = button.getAttribute("data-copy-game");
@@ -121,6 +166,44 @@ function renderFeatured(){
   });
 
   wireConsultButtons();
+}
+
+function loadDeferredImage(img){
+  const src = img.getAttribute("data-src");
+  if(!src) return;
+  img.src = src;
+  img.removeAttribute("data-src");
+}
+
+function setupDeferredImages(){
+  const images = $$("img[data-src]");
+  if(!images.length) return;
+
+  if("IntersectionObserver" in window){
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if(!entry.isIntersecting) return;
+        loadDeferredImage(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin:"520px 0px" });
+
+    images.forEach((img) => observer.observe(img));
+    return;
+  }
+
+  const loadVisible = () => {
+    $$("img[data-src]").forEach((img) => {
+      const rect = img.getBoundingClientRect();
+      if(rect.top < window.innerHeight + 520 && rect.bottom > -220){
+        loadDeferredImage(img);
+      }
+    });
+  };
+
+  window.addEventListener("scroll", loadVisible, { passive:true });
+  window.addEventListener("resize", loadVisible);
+  loadVisible();
 }
 
 function populateSelect(games){
@@ -154,19 +237,19 @@ function fallbackConsultReply(message){
   const isExperienceInquiry = text.includes("基础") || text.includes("体验包") || text.includes("18") || text.includes(EXPERIENCE_GROUP);
 
   if(isExperienceInquiry){
-    return `${EXPERIENCE_PACKAGE_SUMMARY}完成后请加入 QQ 群 ${EXPERIENCE_GROUP} 领取。`;
+    return `${EXPERIENCE_PACKAGE_SUMMARY}下面附上 18 元体验包付款图，完成后请申请 QQ 群 ${EXPERIENCE_GROUP} 领取。`;
   }
 
   if(text.includes("微信") || text.includes("失败") || text.includes("付款") || text.includes("支付") || text.includes("支付宝") || text.includes("备用")){
-    return `完整包主图支持微信和支付宝，建议优先使用支付宝；如微信方式不稳定，请使用页面中的备用图。完成后请加入 QQ 群 ${COMPLETE_GROUP} 领取。`;
+    return `请截图保存到相册扫码付款，第一张图支持微信和支付宝，建议优先使用支付宝/微信中的银行卡；如第一张图微信方付款失败，请使用第二张微信备用支付图。完成后请申请 QQ 群 ${COMPLETE_GROUP} 领取。`;
   }
 
   if(text.includes("群") || text.includes("领取") || text.includes("qq")){
-    return `购买完整包后请加入 QQ 群 ${COMPLETE_GROUP}，群内人工核验后提供完整资料、下载说明、安装教程和持续更新提醒，并享受 1 年售后服务。`;
+    return `购买完整包后请申请 QQ 群 ${COMPLETE_GROUP}，群内人工核验后提供完整资料、下载说明、安装教程和持续更新提醒，并享受 1 年售后服务。`;
   }
 
   if(text.includes("购买") || text.includes("位置") || text.includes("扫码") || text.includes("哪里")){
-    return `请在页面标注“完整包QQ群${COMPLETE_GROUP}”的区域查看完整包信息，价格为 ${PACKAGE_PRICE}。建议优先使用支付宝；如微信方式不稳定，请使用备用图。完成后请加入 QQ 群 ${COMPLETE_GROUP}。`;
+    return `完整包价格为 ${PACKAGE_PRICE}。请截图保存到相册扫码付款，第一张图支持微信和支付宝，建议优先使用支付宝/微信中的银行卡；如第一张图微信方付款失败，请使用第二张微信备用支付图。完成后请申请 QQ 群 ${COMPLETE_GROUP} 领取。`;
   }
 
   if(text.includes("内容") || text.includes("包含") || text.includes("资料")){
@@ -181,6 +264,18 @@ function fallbackConsultReply(message){
   return `可以咨询完整包内容、完整包QQ群${COMPLETE_GROUP}、基础体验包QQ群${EXPERIENCE_GROUP}、备用图，以及具体游戏的资料版本和更新情况。${game ? `你当前选择的是「${game}」，可以直接询问它的版本和领取方式。` : "也可以先在下拉框选择一个游戏再咨询。"}`;
 }
 
+function paymentCardsForMessage(message){
+  const text = normalize(message);
+  const isExperienceInquiry = text.includes("基础") || text.includes("体验包") || text.includes("18") || text.includes(EXPERIENCE_GROUP);
+  const asksForBackup = text.includes("备用") || text.includes("失败");
+  const asksForPayment = text.includes("付款") || text.includes("支付") || text.includes("支付宝") || text.includes("微信") || text.includes("扫码") || text.includes("二维码") || text.includes("购买") || text.includes("哪里");
+
+  if(isExperienceInquiry) return PAYMENT_CARDS.experience;
+  if(asksForBackup && !text.includes("完整包")) return PAYMENT_CARDS.backup;
+  if(asksForPayment) return PAYMENT_CARDS.complete;
+  return [];
+}
+
 function renderMessage(role, text){
   const messages = $("#chatMessages");
   const row = document.createElement("div");
@@ -188,6 +283,40 @@ function renderMessage(role, text){
   row.innerHTML = `<div class="bubble">${escapeHtml(text)}</div>`;
   messages.appendChild(row);
   messages.scrollTop = messages.scrollHeight;
+}
+
+function renderPaymentCards(cards){
+  if(!cards.length) return;
+
+  const messages = $("#chatMessages");
+  const row = document.createElement("div");
+  row.className = "message assistant";
+  const bubble = document.createElement("div");
+  bubble.className = "bubble qr-bubble";
+
+  cards.forEach((card) => {
+    const figure = document.createElement("figure");
+    figure.className = "chat-qr-card";
+    figure.innerHTML = `
+      <img src="${card.src}" alt="${escapeHtml(card.alt)}" loading="eager" decoding="async" />
+      <figcaption>
+        <strong>${escapeHtml(card.title)}</strong>
+        <span>${escapeHtml(card.note)}</span>
+      </figcaption>
+    `;
+    bubble.appendChild(figure);
+  });
+
+  row.appendChild(bubble);
+  messages.appendChild(row);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function renderAssistantReply(reply, message){
+  const text = typeof reply === "string" ? reply : reply.text;
+  const cards = typeof reply === "string" ? paymentCardsForMessage(message) : (reply.cards || paymentCardsForMessage(message));
+  renderMessage("assistant", text);
+  renderPaymentCards(cards);
 }
 
 function setChatLoading(isLoading){
@@ -198,6 +327,10 @@ function setChatLoading(isLoading){
 }
 
 async function askBackend(message){
+  if(!USE_CONSULT_BACKEND){
+    throw new Error("consult backend disabled on static hosting");
+  }
+
   const response = await fetch("/api/consult", {
     method:"POST",
     headers:{ "Content-Type":"application/json" },
@@ -214,7 +347,10 @@ async function askBackend(message){
   }
 
   const data = await response.json();
-  return data.reply || fallbackConsultReply(message);
+  return {
+    text:data.reply || fallbackConsultReply(message),
+    cards:paymentCardsForMessage(message)
+  };
 }
 
 async function sendConsultMessage(message){
@@ -226,9 +362,9 @@ async function sendConsultMessage(message){
 
   try{
     const reply = await askBackend(clean);
-    renderMessage("assistant", reply);
+    renderAssistantReply(reply, clean);
   }catch(_error){
-    renderMessage("assistant", fallbackConsultReply(clean));
+    renderAssistantReply(fallbackConsultReply(clean), clean);
   }finally{
     setChatLoading(false);
   }
@@ -242,7 +378,7 @@ function openChat(prefill = ""){
   document.body.classList.add("chat-open");
 
   if(!$("#chatMessages").children.length){
-    renderMessage("assistant", `你好，我可以帮你了解${PACKAGE_NAME}内容、${PACKAGE_PRICE}领取方式、完整包QQ群${COMPLETE_GROUP}、基础体验包QQ群${EXPERIENCE_GROUP}。${COMPLETE_PACKAGE_SUMMARY}${EXPERIENCE_PACKAGE_SUMMARY}建议优先使用支付宝；如微信方式不稳定，请使用备用图。`);
+    renderMessage("assistant", `你好，我可以帮你了解${PACKAGE_NAME}内容、${PACKAGE_PRICE}领取方式、完整包QQ群${COMPLETE_GROUP}、基础体验包QQ群${EXPERIENCE_GROUP}。需要付款图时，请点上方快捷问题或输入“完整包付款二维码”“微信备用图”“18元体验包”。`);
   }
 
   if(prefill){
@@ -326,7 +462,7 @@ function wireEvents(){
 
 async function boot(){
   try{
-    const response = await fetch("./data/games.json", { cache:"force-cache" });
+    const response = await fetch("./data/games.json?v=game-names-20260624", { cache:"force-cache" });
     ALL_GAMES = await response.json();
     ALL_GAMES_SET = new Set(ALL_GAMES);
     $("#totalCount").textContent = String(ALL_GAMES.length);
